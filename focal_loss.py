@@ -1,7 +1,7 @@
 # --------------------------------------------------------
 # Focal loss
 # Licensed under The Apache-2.0 License [see LICENSE for details]
-# Written by chen shuai
+# Written by unsky https://github.com/unsky/
 # --------------------------------------------------------
 
 """
@@ -12,9 +12,8 @@ import mxnet as mx
 import numpy as np
 from distutils.util import strtobool
 class FocalLossOperator(mx.operator.CustomOp):
-    def __init__(self, num_classes, gamma):
+    def __init__(self,  gamma):
         super(FocalLossOperator, self).__init__()
-        self._num_classes = num_classes
         self._gamma = gamma
 
     def forward(self, is_train, req, in_data, out_data, aux):
@@ -54,9 +53,9 @@ class FocalLossOperator(mx.operator.CustomOp):
 
 @mx.operator.register('FocalLoss')
 class FocalLossProp(mx.operator.CustomOpProp):
-    def __init__(self, num_classes, gamma):
+    def __init__(self, gamma):
         super(FocalLossProp, self).__init__(need_top_grad=False)
-        self._num_classes = int(num_classes)
+
         self._gamma = float(gamma)
 
     def list_arguments(self):
@@ -72,7 +71,7 @@ class FocalLossProp(mx.operator.CustomOpProp):
         return  [data_shape, labels_shape],[out_shape]
 
     def create_operator(self, ctx, shapes, dtypes):
-        return FocalLossOperator(self._num_classes, self._gamma)
+        return FocalLossOperator(self._gamma)
 
     def declare_backward_dependency(self, out_grad, in_data, out_data):
         return []

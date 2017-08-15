@@ -55,11 +55,12 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
         keep_inds = np.where(label != -1)[0]
         label = label[keep_inds]
         cls = pred[keep_inds, label]
+        
         cls += 1e-14
+        cls_loss = (-1.0 * np.power(1 - cls, 2) * np.log(cls))
 
-        #focal loss value
-        cls_loss = -1 * np.power(1 - cls, 2) * np.log(cls)
-        # normalization
+        cls_loss= cls_loss/np.sum(cls_loss)
+        #cls_loss = -1 * np.log(cls)
         cls_loss = np.sum(cls_loss)
         self.sum_metric += cls_loss
         self.num_inst += label.shape[0]
