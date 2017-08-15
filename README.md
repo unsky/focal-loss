@@ -31,7 +31,7 @@ focal loss value is not used in focal_loss.py, becayse we should forward the cls
 the major task of focal_loss.py is to backward the focal loss gradient.
 
 
-the focal vale should be calculated in metric.py and  use normalization in it.
+the focal loss vale should be calculated in metric.py and  use normalization in it.
 
 
 and this layer is not support `use_ignore`
