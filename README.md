@@ -20,6 +20,12 @@ cls_prob = mx.sym.Custom(op_type='FocalLoss',name='cls_prob', data=cls_score, la
 
 
 # note!!
+
+## very import!!!
+
+in my experiment, i have to use the strategy in  `paper section 3.3`.
+
+Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.
  
 focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
 the major task of focal_loss.py is to backward the focal loss gradient.
