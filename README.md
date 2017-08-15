@@ -5,12 +5,33 @@ this is unofficial code version for the code of focal loss for Dense Object Dete
 
 the code is implementtd using mxnet python layer.
 
-this is my derivation about backward, if it has mistake, please note to me.
+
+# usage
+Assue that you have put the focal_loss.py in your operator path
+
+you can use:
+
+```
+from your_operators.focal_loss import *
+
+cls_prob = mx.sym.Custom(op_type='FocalLoss', num_classes=num_classes,name='cls_prob', data=cls_score, labels=label, gamma= 2)
+
+```
+
 
 # note!!
  
-focal loss value is not used in this place we should forward the cls_pro in this layer, the focal vale should be calculated in metric.py
+focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
+the major task of focal_loss.py is to backward the focal loss gradient.
+
+
+the focal vale should be calculated in metric.py and  use normalization in it.
+
+
+and this layer is not support `use_ignore`
+
 for example :
+
 ```
 class RCNNLogLossMetric(mx.metric.EvalMetric):
     def __init__(self, cfg):
@@ -34,14 +55,18 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
         keep_inds = np.where(label != -1)[0]
         label = label[keep_inds]
         cls = pred[keep_inds, label]
-
         cls += 1e-14
+
         #focal loss value
         cls_loss = -1 * np.power(1 - cls, 2) * np.log(cls)
+        # normalization
         cls_loss = np.sum(cls_loss)
         self.sum_metric += cls_loss
         self.num_inst += label.shape[0]
 ```
+By the way
+
+this is my derivation about backward, if it has mistake, please note to me.
 
 # softmax activation:
 
