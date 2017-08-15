@@ -15,7 +15,7 @@ this is my derivation about backward, if it has mistake, please note to me.
 
 ![image](https://github.com/unsky/focal-loss/blob/master/3.jpg)
 
-# Focla loss with softmax
+# Focal loss with softmax
 
 ![image](https://github.com/unsky/focal-loss/blob/master/1.jpg)
 

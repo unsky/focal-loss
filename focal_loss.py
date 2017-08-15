@@ -1,27 +1,21 @@
 # --------------------------------------------------------
-# Deformable Convolutional Networks
-# Copyright (c) 2017 Microsoft
+# Focal loss
 # Licensed under The Apache-2.0 License [see LICENSE for details]
-# Written by Yuwen Xiong
+# Written by chenshuai
 # --------------------------------------------------------
 
 """
-Proposal Target Operator selects foreground and background roi and assigns label, bbox_transform to them.
+focal loss with softmax
 """
 
 import mxnet as mx
 import numpy as np
 from distutils.util import strtobool
-
-
-
-
 class FocalLossOperator(mx.operator.CustomOp):
-    def __init__(self, num_classes, num_reg_classes, roi_per_img):
+    def __init__(self, num_classes, gamma):
         super(FocalLossOperator, self).__init__()
         self._num_classes = num_classes
-        self._num_reg_classes = num_reg_classes
-        self._roi_per_img = roi_per_img
+        self._gamma = gamma
 
     def forward(self, is_train, req, in_data, out_data, aux):
 
@@ -60,27 +54,27 @@ class FocalLossOperator(mx.operator.CustomOp):
 
 @mx.operator.register('FocalLoss')
 class FocalLossProp(mx.operator.CustomOpProp):
-    def __init__(self, num_classes, num_reg_classes, roi_per_img):
+    def __init__(self, num_classes, gamma):
         super(FocalLossProp, self).__init__(need_top_grad=False)
         self._num_classes = int(num_classes)
-        self._num_reg_classes = int(num_reg_classes)
-        self._roi_per_img = int(roi_per_img)
+        self._gamma = float(gamma)
+
+
 
     def list_arguments(self):
-        return ['cls_score', 'bbox_pred', 'labels', 'bbox_targets', 'bbox_weights']
+        return ['data', 'label']
 
     def list_outputs(self):
-        return ['cls_prob']
+        return ['focal_loss']
 
     def infer_shape(self, in_shape):
-        labels_shape = in_shape[2]
-        bbox_weights_shape = in_shape[4]
-
+        data_shape = in_shape[0]
+        labels_shape = in_shape[1]
         return in_shape, \
-               [labels_shape, bbox_weights_shape]
+               [data_shape, labels_shape]
 
     def create_operator(self, ctx, shapes, dtypes):
-        return FocalLossOperator(self._num_classes, self._num_reg_classes, self._roi_per_img)
+        return FocalLossOperator(self._num_classes, self.gama)
 
     def declare_backward_dependency(self, out_grad, in_data, out_data):
         return []
