@@ -1,9 +1,9 @@
 # focal-loss
 
-this is unofficial code version for the code of focal loss for Dense Object Detection.
+The code is unofficial version for `focal loss for Dense Object Detection`.
  https://arxiv.org/abs/1708.02002
 
-the code is implementtd using mxnet python layer.
+this is implementtd using mxnet python layer.
 
 
 # usage
