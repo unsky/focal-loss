@@ -21,7 +21,7 @@ cls_prob = mx.sym.Custom(op_type='FocalLoss',name='cls_prob', data=cls_score, la
 
 # note!!
 
-## very import!!!
+## very important!!!
 
 in my experiment, i have to use the strategy in  `paper section 3.3`.
 
