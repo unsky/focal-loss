@@ -14,7 +14,7 @@ you can use:
 ```
 from your_operators.focal_loss import *
 
-cls_prob = mx.sym.Custom(op_type='FocalLoss',name='cls_prob', data=cls_score, labels=label, gamma= 2)
+cls_prob = mx.sym.Custom(op_type='FocalLoss', name = 'cls_prob', data = cls_score, labels = label, alpha =0.25, gamma= 2)
 
 ```
 
