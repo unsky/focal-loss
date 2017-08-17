@@ -23,28 +23,28 @@ cls_prob = mx.sym.Custom(op_type='FocalLoss', name = 'cls_prob', data = cls_scor
 
 ## very important!!!
 
-in my experiment, i have to use the strategy in  `paper section 3.3`.
+~~in my experiment, i have to use the strategy in  `paper section 3.3`.~~
 
-LIKE:
+~~LIKE:~~
 
 ![image](https://github.com/unsky/focal-loss/blob/master/loss1.png)
 
-Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.
+~~Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.~~
  
 
 
 
-##AND YOU CAN TRY MY INSTEAD STRATEGY:
+~~##AND YOU CAN TRY MY INSTEAD STRATEGY:~~
 
-train the model using the classical softmax for several times (for examples 3 in kitti dataset)
+~~train the model using the classical softmax for several times (for examples 3 in kitti dataset)~~
 
-choose a litti learning rate:
+~~choose a litti learning rate:~~
 
-and the traing loss will work well:
+~~and the traing loss will work well:~~
 
 ![image](https://github.com/unsky/focal-loss/blob/master/loss2.png)
 
-
+## now focal loss with softmax work well
 
 
 focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
