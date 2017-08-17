@@ -85,9 +85,8 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
         alpha = 0.25
 
         cls_loss = alpha*(-1.0 * np.power(1 - cls, gamma) * np.log(cls))
-        cls_loss= cls_loss/np.sum(cls_loss)
-        #cls_loss = -1 * np.log(cls)
-        cls_loss = np.sum(cls_loss)
+
+        cls_loss = np.sum(cls_loss)/len(label)
         #print cls_loss
         self.sum_metric += cls_loss
         self.num_inst += label.shape[0]

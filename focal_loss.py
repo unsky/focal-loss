@@ -38,7 +38,6 @@ class FocalLossOperator(mx.operator.CustomOp):
         self.assign(out_data[0],req[0],mx.nd.array(pro_))
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         
-      
         labels = self._labels
         pro_ = self.pro_
    
@@ -50,7 +49,6 @@ class FocalLossOperator(mx.operator.CustomOp):
         ####i==j 
         #reload pt
         pt = self._pt + 1e-14
-      
         dx[np.arange(pro_.shape[0],dtype = 'int'), labels.astype('int')]  = self._alpha * np.power(1 - pt, self._gamma) * (self._gamma * pt * np.log(pt) + pt -1) * (1.0)
         dx /= labels.shape[0] ##batch 
 
