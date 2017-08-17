@@ -96,7 +96,7 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
 # the gradient must like
 ## forward
 ![image](https://github.com/unsky/focal-loss/blob/master/forward.png)
-## forward
+## backward
 ![image](https://github.com/unsky/focal-loss/blob/master/backward.png)
 
 you can check the gradient value in your debug(if need).
