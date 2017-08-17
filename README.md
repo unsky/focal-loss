@@ -93,6 +93,13 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
         self.num_inst += label.shape[0]
 
 ```
+# the gradient must like
+## forward
+![image](https://github.com/unsky/focal-loss/blob/master/forward.png)
+## forward
+![image](https://github.com/unsky/focal-loss/blob/master/backward.png)
+
+you can check the gradient value in your debug(if need).
 By the way
 
 this is my derivation about backward, if it has mistake, please note to me.
