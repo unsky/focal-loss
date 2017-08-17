@@ -31,8 +31,7 @@ LIKE:
 
 Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.
  
-focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
-the major task of focal_loss.py is to backward the focal loss gradient.
+
 
 
 ##AND YOU CAN TRY MY INSTEAD STRATEGY:
@@ -48,9 +47,10 @@ and the traing loss will work well:
 
 
 
+focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
+the major task of focal_loss.py is to backward the focal loss gradient.
 
 the focal loss vale should be calculated in metric.py and  use normalization in it.
-
 
 and this layer is not support `use_ignore`
 
