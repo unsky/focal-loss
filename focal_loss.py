@@ -10,54 +10,62 @@ Focal loss
 
 import mxnet as mx
 import numpy as np
-from distutils.util import strtobool
 class FocalLossOperator(mx.operator.CustomOp):
-    def __init__(self,  gamma,alpha):
+    def __init__(self,  gamma, alpha):
         super(FocalLossOperator, self).__init__()
         self._gamma = gamma
         self._alpha = alpha
 
     def forward(self, is_train, req, in_data, out_data, aux):
-
+      
         cls_score = in_data[0]
         self._cls_score = cls_score
         labels = in_data[1].asnumpy()
         self._labels = labels
-
         pro_ = mx.nd.SoftmaxActivation(cls_score) + 1e-14
-        pro_ = pro_.asnumpy()
+        pro_ = pro_.asnumpy()   
+        self.pro_ = pro_
         # restore pt for backward
+       
         self._pt = pro_[np.arange(pro_.shape[0],dtype = 'int'), labels.astype('int')]
-
+ 
         ### note!!!!!!!!!!!!!!!!
         # focal loss value is not used in this place we should forward the cls_pro in this layer, the focal vale should be calculated in metric.py
         # the method is in readme
         #  focal loss (batch_size,num_class)
-        loss_ = -1 *self._alpha* np.power(1 - pro_, self._gamma) * np.log(pro_)
+        loss_ = -1 * np.power(1 - pro_, self._gamma) * np.log(pro_)
 
         self.assign(out_data[0],req[0],mx.nd.array(pro_))
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
-        cls_score = self._cls_score
+        
+      
         labels = self._labels
-        pro_ = mx.nd.SoftmaxActivation(cls_score) + 1e-14
-        pro_ = pro_.asnumpy()
+        pro_ = self.pro_
+   
         #i!=j
-        pt = self._pt
+        pt = self._pt + 1e-14
+    
         pt = pt.reshape(len(pt),1)
-        dx = np.power(1 - pt, self._gamma - 1) *(self._gamma * (-1 * pt * pro_) * np.log(pro_) + pt * (1 - pro_))
+        dx = self._alpha * np.power(1 - pt, self._gamma - 1) * (self._gamma * (-1 * pt * pro_) * np.log(pro_) + pt * (1 - pro_)) * 1.0
         ####i==j 
         #reload pt
-        pt = self._pt 
-        dx[np.arange(pro_.shape[0],dtype = 'int'), labels.astype('int')] = self._alpha * np.power(1 - pt, self._gamma) * (self._gamma * pt * np.log(pt) + pt -1) 
+        pt = self._pt + 1e-14
+      
+        dx[np.arange(pro_.shape[0],dtype = 'int'), labels.astype('int')]  = self._alpha * np.power(1 - pt, self._gamma) * (self._gamma * pt * np.log(pt) + pt -1) * (1.0)
+        dx /= labels.shape[0] ##batch 
+
         self.assign(in_grad[0], req[0], mx.nd.array(dx))
+        self.assign(in_grad[1],req[1],0)
+ 
+
 
 @mx.operator.register('FocalLoss')
 class FocalLossProp(mx.operator.CustomOpProp):
     def __init__(self, gamma,alpha):
         super(FocalLossProp, self).__init__(need_top_grad=False)
-        self._alpha = alpha
-        self._gamma = float(gamma)
 
+        self._gamma = float(gamma)
+        self._alpha = float(alpha)
 
     def list_arguments(self):
         return ['data', 'labels']

@@ -25,10 +25,28 @@ cls_prob = mx.sym.Custom(op_type='FocalLoss', name = 'cls_prob', data = cls_scor
 
 in my experiment, i have to use the strategy in  `paper section 3.3`.
 
+LIKE:
+
+![image](https://github.com/unsky/focal-loss/blob/master/loss1.png)
+
 Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.
  
 focal loss value is not used in focal_loss.py, becayse we should forward the cls_pro in this layer,
 the major task of focal_loss.py is to backward the focal loss gradient.
+
+
+##AND YOU CAN TRY MY INSTEAD STRATEGY:
+
+train the model using the classical softmax for several times (for examples 3 in kitti dataset)
+
+choose a litti learning rate:
+
+and the traing loss will work well:
+
+![image](https://github.com/unsky/focal-loss/blob/master/loss2.png)
+
+
+
 
 
 the focal loss vale should be calculated in metric.py and  use normalization in it.
@@ -61,15 +79,19 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
         keep_inds = np.where(label != -1)[0]
         label = label[keep_inds]
         cls = pred[keep_inds, label]
-        
-        cls += 1e-14
-        cls_loss = (-1.0 * np.power(1 - cls, 2) * np.log(cls))
 
+        cls += 1e-14
+        gamma = 2
+        alpha = 0.25
+
+        cls_loss = alpha*(-1.0 * np.power(1 - cls, gamma) * np.log(cls))
         cls_loss= cls_loss/np.sum(cls_loss)
         #cls_loss = -1 * np.log(cls)
         cls_loss = np.sum(cls_loss)
+        #print cls_loss
         self.sum_metric += cls_loss
         self.num_inst += label.shape[0]
+
 ```
 By the way
 
