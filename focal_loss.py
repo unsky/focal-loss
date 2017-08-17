@@ -45,7 +45,7 @@ class FocalLossOperator(mx.operator.CustomOp):
         pt = self._pt + 1e-14
     
         pt = pt.reshape(len(pt),1)
-        dx = self._alpha * np.power(1 - pt, self._gamma - 1) * (self._gamma * (-1 * pt * pro_) * np.log(pro_) + pt * (1 - pro_)) * 1.0
+        dx = self._alpha * np.power(1 - pt, self._gamma - 1) * (self._gamma * (-1 * pt * pro_) * np.log(pt) + pt * (1 - pt)) * 1.0
         ####i==j 
         #reload pt
         pt = self._pt + 1e-14
