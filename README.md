@@ -26,7 +26,7 @@ this is my experiments on kitti 10 cls, the performance on hard cls is great!!
 | base line(faster rcnn + ohem(1:2))   |      0.7892   |0.7462 |0.8465 |0.623   |0.4254    |0.1374        |0.5035|0.5007|0.1329  |
 | faster rcnn + focal loss with softmax|      0.797    |0.874  | 0.8959|0.7914  |0.5700    |0.2806        |0.7884|0.7052|0.1433  |
 
-
+![image](https://github.com/unsky/focal-loss/blob/master/readme/res.png)
 
 
 
@@ -39,7 +39,7 @@ this is my experiments on kitti 10 cls, the performance on hard cls is great!!
 
 ~~LIKE:~~
 
-![image](https://github.com/unsky/focal-loss/blob/master/loss1.png)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/loss1.png)
 
 ~~Uder such an initialization, in the presence of class imbalance, the loss due to the frequent class can dominate total loss and cause instability in early training.~~
  
@@ -54,7 +54,7 @@ this is my experiments on kitti 10 cls, the performance on hard cls is great!!
 
 ~~and the traing loss will work well:~~
 
-![image](https://github.com/unsky/focal-loss/blob/master/loss2.png)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/loss2.png)
 
 ## now focal loss with softmax work well
 
@@ -106,9 +106,9 @@ class RCNNLogLossMetric(mx.metric.EvalMetric):
 ```
 # the gradient must like
 ## forward
-![image](https://github.com/unsky/focal-loss/blob/master/forward.png)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/forward.png)
 ## backward
-![image](https://github.com/unsky/focal-loss/blob/master/backward.png)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/backward.png)
 
 you can check the gradient value in your debug(if need).
 By the way
@@ -117,14 +117,14 @@ this is my derivation about backward, if it has mistake, please note to me.
 
 # softmax activation:
 
-![image](https://github.com/unsky/focal-loss/blob/master/2.jpg)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/2.jpg)
 
 # cross entropy with softmax
 
-![image](https://github.com/unsky/focal-loss/blob/master/3.jpg)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/3.jpg)
 
 # Focal loss with softmax
 
-![image](https://github.com/unsky/focal-loss/blob/master/1.jpg)
+![image](https://github.com/unsky/focal-loss/blob/master/readme/1.jpg)
 
 
