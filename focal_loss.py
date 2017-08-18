@@ -14,7 +14,7 @@ class FocalLossOperator(mx.operator.CustomOp):
     def __init__(self,  gamma, alpha):
         super(FocalLossOperator, self).__init__()
         self._gamma = gamma
-        self._alpha = alpha # not used
+        self._alpha = alpha 
 
     def forward(self, is_train, req, in_data, out_data, aux):
       
