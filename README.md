@@ -18,6 +18,18 @@ cls_prob = mx.sym.Custom(op_type='FocalLoss', name = 'cls_prob', data = cls_scor
 
 ```
 
+# focal loss with softmax on kitti(10 cls)
+this is my experiments on kitti 10 cls, the performance on hard cls is great!!
+
+| method@0.7                           | car           | van   | Truck |cyclist |pedestrian|person_sitting|tram  |misc  |dontcare|
+| -------------                        |:-------------:| -----:| -----:| ------:|---------:|-------------:|-----:|-----:|-------:|
+| base line(faster rcnn + ohem(1:2))   |      0.7892   |0.7462 |0.8465 |0.623   |0.4254    |0.1374        |0.5035|0.5007|0.1329  |
+| faster rcnn + focal loss with softmax|      0.797    |0.874  | 0.8959|0.7914  |0.5700    |0.2806        |0.7884|0.7052|0.1433  |
+
+
+
+
+
 
 # note!!
 
