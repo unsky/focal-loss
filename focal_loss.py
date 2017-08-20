@@ -30,7 +30,8 @@ class FocalLossOperator(mx.operator.CustomOp):
         self._pt = pro_[np.arange(pro_.shape[0],dtype = 'int'), labels.astype('int')]
  
         ### note!!!!!!!!!!!!!!!!
-        # focal loss value is not used in this place we should forward the cls_pro in this layer, the focal vale should be calculated in metric.py
+        # focal loss value is not used in this place we should forward the cls_pro in this layer, 
+        # the focal vale should be calculated in metric.py
         # the method is in readme
         #  focal loss (batch_size,num_class)
         loss_ = -1 * np.power(1 - pro_, self._gamma) * np.log(pro_)
@@ -39,7 +40,6 @@ class FocalLossOperator(mx.operator.CustomOp):
         
         labels = self._labels
         pro_ = self.pro_
-        #print pro_[1]
         #i!=j
         pt = self._pt + 1e-14
     
