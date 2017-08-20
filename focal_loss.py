@@ -34,7 +34,7 @@ class FocalLossOperator(mx.operator.CustomOp):
         # the focal vale should be calculated in metric.py
         # the method is in readme
         #  focal loss (batch_size,num_class)
-        loss_ = -1 * np.power(1 - pro_, self._gamma) * np.log(pro_)
+        #loss_ = -1 * np.power(1 - pro_, self._gamma) * np.log(pro_)
         self.assign(out_data[0],req[0],mx.nd.array(pro_))
     def backward(self, req, out_grad, in_data, out_data, in_grad, aux):
         
