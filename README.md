@@ -28,7 +28,8 @@ this is my experiments on kitti 10 cls, the performance on hard cls is great!!
 
 ![image](https://github.com/unsky/focal-loss/blob/master/readme/res.png)
 
-
+#### about parameters in this expriment
+https://github.com/unsky/focal-loss/issues/5
 
 
 # note!!
@@ -55,6 +56,9 @@ this is my experiments on kitti 10 cls, the performance on hard cls is great!!
 ~~and the traing loss will work well:~~
 
 ![image](https://github.com/unsky/focal-loss/blob/master/readme/loss2.png)
+## about alpha
+
+https://github.com/unsky/focal-loss/issues/4
 
 ## now focal loss with softmax work well
 
