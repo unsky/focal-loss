@@ -5,6 +5,9 @@ The code is unofficial version for `focal loss for Dense Object Detection`.
 
 this is implementtd using mxnet python layer.
 
+The retina-net is in https://github.com/unsky/RetinaNet
+
+
 
 # usage
 Assue that you have put the focal_loss.py in your operator path
