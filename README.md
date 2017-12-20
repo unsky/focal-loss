@@ -75,7 +75,7 @@ and this layer is not support `use_ignore`
 
 for example :
 
-```
+```python
 class RCNNLogLossMetric(mx.metric.EvalMetric):
     def __init__(self, cfg):
         super(RCNNLogLossMetric, self).__init__('RCNNLogLoss')
